@@ -71,16 +71,20 @@ namespace CrowdProject
         private void UpdateTexture()
         {
 
-            render.rectTransform.sizeDelta = new Vector2(rect.width* displayMultiplier, rect.height* displayMultiplier);
+            render.rectTransform.sizeDelta = new Vector2(size* displayMultiplier,size* displayMultiplier);
 
             Rect tmpRect = new Rect(webCam.width / 2 - rect.width / 2 + rect.x, webCam.height / 2 - rect.height / 2 + rect.y, rect.width, rect.height);
 
+            texture = new Texture2D((int)tmpRect.width, (int)tmpRect.height);
+
             texture.SetPixels(webCam.GetPixels((int)tmpRect.x, (int)tmpRect.y, (int)tmpRect.width, (int)tmpRect.height));
-            //TextureScale.Bilinear(tmp, (int)((float)tmp.width / (float)tmp.height * (float)size), size);
+            //texture.SetPixels(webCam.GetPixels());
+            TextureScale.Point(texture, size, size);
             texture.SetPixels(ConvertContrasts(texture.GetPixels()));
             Vector2 centerPos = Center(ref texture) * centerDistance;
             texture.Apply();
 
+            render.texture = texture;
             
             direction = new Vector3(centerPos.x, 0.0f, centerPos.y);
 
