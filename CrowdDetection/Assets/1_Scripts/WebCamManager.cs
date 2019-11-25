@@ -47,17 +47,31 @@ namespace CrowdProject
             mesh.localPosition = -displayCenter.localPosition;
         }
 
-        private void SetComputeShader()
-        {
-            int kernelIndex = webcamProcessing.FindKernel("CSMain");
-            texture = new Texture2D(webCam.width, webCam.height);
-            texture.SetPixels(webCam.GetPixels());
+        //private void SetComputeShader()
+        //{
+        //    int kernelIndex = webcamProcessing.FindKernel("CSMain");
 
-            threadGroups = new Vector3Int(webCam.width / 32, webCam.height / 32, 1);
+        //    render.rectTransform.sizeDelta = new Vector2(size * displayMultiplier, size * displayMultiplier);
 
-            webcamProcessing.SetTexture(kernelIndex, "Result", texture);
-            webcamProcessing.Dispatch(kernelIndex, threadGroups.x, threadGroups.y, threadGroups.z);
-        }
+        //    Rect tmpRect = new Rect(webCam.width / 2 - rect.width / 2 + rect.x, webCam.height / 2 - rect.height / 2 + rect.y, rect.width, rect.height);
+
+        //    texture = new Texture2D((int)tmpRect.width, (int)tmpRect.height);
+
+        //    texture.SetPixels(webCam.GetPixels((int)tmpRect.x, (int)tmpRect.y, (int)tmpRect.width, (int)tmpRect.height));
+
+        //    RenderTexture tmp = new RenderTexture(texture.width/2, texture.height/2, 0, RenderTextureFormat.ARGB32);
+        //    tmp.
+        //    RenderTexture.active = tmp;
+        //    Graphics.Blit(texture, tmp);
+        //    tmp.enableRandomWrite = true;
+
+
+        //    threadGroups = new Vector3Int(tmp.width / 8, tmp.height / 8, 1);
+
+        //    webcamProcessing.SetTexture(kernelIndex, "Result", tmp);
+        //    webcamProcessing.Dispatch(kernelIndex, threadGroups.x, threadGroups.y, threadGroups.z);
+
+        //}
 
         private void GetWebcam()
         {
@@ -148,16 +162,17 @@ namespace CrowdProject
                 {
                     if (colors[x + y * width].r < 0.5f)
                     {
-                        result += new Vector2((x - width / 2.0f) / width, (y - height / 2.0f) / height);
+                        result += new Vector2(x + 0.5f, y + 0.5f);
                         amount++;
                     }
                 }
             }
 
-            _texture.SetPixel((int)result.x + width/2, (int)result.y + height/2, Color.red);
-            result /= amount;
 
-            return result;
+            result /= amount;
+            _texture.SetPixel((int)result.x, (int)result.y, Color.red);
+
+            return new Vector2((result.x/width-0.5f)*2.0f, (result.y / width - 0.5f) * 2.0f);
         }
 
     }
