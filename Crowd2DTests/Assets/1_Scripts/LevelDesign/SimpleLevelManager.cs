@@ -50,5 +50,38 @@ namespace CrowdProject
                 Instantiate(collectablePrefab, position, Quaternion.identity, transform).name = "Collectable " + i + " - " + cell + position;
             }
         }
+
+        private void SpawnCollectables(Vector2[] _excludedAreas)
+        {
+            List<Vector2Int> pickedCells = new List<Vector2Int>();
+
+            if (collectableAmount > grid.cellCount - _excludedAreas.Length)
+            {
+                Debug.LogWarning("collectableAmount > cellcount ! collectableAmount must be clamped between 0 and grid.cellcount");
+                collectableAmount = grid.cellCount;
+            }
+
+            for (int i = 0; i < _excludedAreas.Length; i++)
+            {
+                pickedCells.Add(grid.WorldToCell(_excludedAreas[i]));
+            }
+
+            for (int i = 0; i < collectableAmount; i++)
+            {
+                Vector2Int cell;
+
+                do
+                {
+                    cell = new Vector2Int(Random.Range(0, grid.size.x), Random.Range(0, grid.size.y));
+                } while (pickedCells.Contains(cell));
+
+                pickedCells.Add(cell);
+
+                Vector2 position = grid.RandomPosInCell(cell);
+
+                //Instantiate(collectablePrefab, new Vector3(cell.x, cell.y, 0), Quaternion.identity, transform).name = "Collectable "+i;
+                Instantiate(collectablePrefab, position, Quaternion.identity, transform).name = "Collectable " + i + " - " + cell + position;
+            }
+        }
     }
 }
