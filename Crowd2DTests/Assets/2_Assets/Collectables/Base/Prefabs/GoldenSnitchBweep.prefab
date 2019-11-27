@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3438806119222452883}
   - component: {fileID: 9215436128526106515}
   m_Layer: 8
-  m_Name: GoldenSnitch
+  m_Name: GoldenSnitchBweep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,6 +113,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca61a5ff5a2122439f958cb22136e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  area:
+    serializedVersion: 2
+    x: -8
+    y: -4
+    width: 16
+    height: 8
   player: {fileID: 0}
   celerityCurve:
     serializedVersion: 2
@@ -152,33 +158,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a18fe70b0f4604083a7b7c204fde66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableAfterPoping: []
   destroyedOnCollision:
   - {fileID: 3438806119222452883}
-  shrinkingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0.0011882988
-      outSlope: 0.0011882988
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.7972374
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  shrinkingDuration: 0.5
+  shrink: {fileID: 0}
+  pop: {fileID: 0}
+  phaseData: {fileID: 11400000, guid: 9a5c0f34ddee7944b94d13d4b3a38eb9, type: 2}
 --- !u!114 &3438806119222452883
 MonoBehaviour:
   m_ObjectHideFlags: 0

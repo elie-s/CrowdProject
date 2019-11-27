@@ -12,9 +12,9 @@ namespace CrowdProject
 
         private Vector2Int lastPos;
 
-        public override void Init()
+        public override void Init(System.Action _callback)
         {
-            base.Init();
+            base.Init(_callback);
             sequence = 0;
             lastPos = Vector2Int.zero;
         }
@@ -65,13 +65,13 @@ namespace CrowdProject
                     break;
             }
 
-            Instantiate(collectablePrefab, grid.RandomPosInCell(lastPos + Vector2Int.one, 0.1f), Quaternion.identity).name = "Collectable 1-1";
+            Spawn(lastPos + Vector2Int.one, collectablePrefab, "Collectable 1 - 1");
         }
 
         private void SequenceTwo()
         {
             lastPos = new Vector2Int(lastPos.x == 0 ? (Random.value > 0.5f ? 1 : -1) : 0, lastPos.y == 0 ? (Random.value > 0.5f ? 1 : -1) : 0);
-            Instantiate(collectablePrefab, grid.RandomPosInCell(lastPos + Vector2Int.one, 0.1f), Quaternion.identity).name = "Collectable 1-2";
+            Spawn(lastPos + Vector2Int.one, collectablePrefab, "Collectable 1 - 2");
         }
 
         private void SequenceThree()
@@ -79,8 +79,15 @@ namespace CrowdProject
             Vector2Int pos1 = new Vector2Int(lastPos.x != 0 ? lastPos.x * -1 : 1, lastPos.y != 0 ? lastPos.y * -1 : 1) + Vector2Int.one;
             Vector2Int pos2 = new Vector2Int(lastPos.x != 0 ? lastPos.x * -1 : -1, lastPos.y != 0 ? lastPos.y * -1 : -1) + Vector2Int.one;
 
-            Instantiate(collectablePrefab, grid.RandomPosInCell(pos1, 0.1f), Quaternion.identity).name = "Collectable 1-3-1";
-            Instantiate(collectablePrefab, grid.RandomPosInCell(pos2, 0.1f), Quaternion.identity).name = "Collectable 1-3-2";
+            Spawn(pos1, collectablePrefab, "Collectable 1 - 3 - 1");
+            Spawn(pos2, collectablePrefab, "Collectable 1 - 3 - 2");
+        }
+
+        private void Spawn(Vector2Int _pos, GameObject _prefab, string _name)
+        {
+            GameObject collectable = Instantiate(_prefab, grid.RandomPosInCell(_pos, 0.1f), Quaternion.identity);
+            collectable.name = _name;
+            collectable.GetComponent<CollectableBehaviour>().AddPhaseSettings(this);
         }
     }
 }

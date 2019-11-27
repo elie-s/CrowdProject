@@ -8,7 +8,7 @@ namespace CrowdProject
     {
         [SerializeField] private GameObject collectablePrefab = default;
         [SerializeField] private int collectableAmount = 5;
-        [SerializeField] private VirtualGrid grid;
+        [SerializeField] private VirtualGrid grid = default;
         // Start is called before the first frame update
         void Start()
         {

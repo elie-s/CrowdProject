@@ -7,41 +7,66 @@ namespace CrowdProject
 {
     public class WebCamManager : MonoBehaviour
     {
-        [HideInInspector] public Texture2D texture;
-        [HideInInspector] public Sprite sprite;
-        [HideInInspector] public Vector3 direction;
+        [HideInInspector] public Texture2D texture = default;
+        [HideInInspector] public Sprite sprite = default;
+        [HideInInspector] public Vector3 direction = default;
         [SerializeField] private RawImage render = default;
-        [SerializeField, Range(0.0f, 1.0f)] private float ceil = 0.35f;
+        [SerializeField, Range(-.5f, .5f)] private float ceil = 0.35f;
         [SerializeField] private int size = 32;
         [SerializeField] private float displayMultiplier = 8.0f;
         [SerializeField] private Rect rect;
         [SerializeField] private Transform displayCenter = default;
         [SerializeField] private Transform mesh = default;
         [SerializeField] private float centerDistance = 1.0f;
+        [SerializeField, Range(1,60)] private int perSecondUpdate = 25;
+        [SerializeField] private bool rotate = false;
+        [Header("Tests")]
+        [SerializeField] private bool test = true;
+        [SerializeField] private bool resize = false;
+        [SerializeField] private bool desaturation = false;
+        [SerializeField] private Frame frame = default;
+        [SerializeField] private Rect testRect;
         [Header("Compute Shader")]
         [SerializeField] private ComputeShader webcamProcessing = default;
         [SerializeField] private Vector3Int threadGroups = new Vector3Int(8, 8, 1);
 
         private WebCamTexture webCam;
         private Color[] oldPixels;
+        private IEnumerator spriteRoutine;
 
         private void Awake()
         {
             GetWebcam();
             texture = new Texture2D((int)rect.width, (int)rect.height);
             if(render) render.texture = texture;
+
+            spriteRoutine = SpriteRoutine();
+        }
+
+        private void Start()
+        {
+            StartCoroutine(SpriteRoutine());
         }
 
         private void Update()
         {
             //UpdateTexture();
             //UpdateMeshPos();
-            UpdateSprite();
+            //UpdateSprite();
         }
 
         private void OnApplicationQuit()
         {
+            StopCoroutine(spriteRoutine);
             webCam.Stop();
+        }
+
+        private IEnumerator SpriteRoutine()
+        {
+            UpdateSprite();
+
+            yield return new WaitForSeconds(1 / (float)perSecondUpdate);
+            StartCoroutine(SpriteRoutine());
         }
 
         private void UpdateMeshPos()
@@ -100,6 +125,8 @@ namespace CrowdProject
             Vector2 centerPos = Center(ref texture) * centerDistance;
             texture.Apply();
 
+            if(rotate) SpriteGenerator.Rotate180(ref texture);
+
             render.texture = texture;
 
             direction = centerPos;
@@ -109,22 +136,48 @@ namespace CrowdProject
 
         private void UpdateSprite()
         {
-            if (render) render.rectTransform.sizeDelta = new Vector2(size * displayMultiplier, size * displayMultiplier);
+            if (!test)
+            {
+                if (render) render.rectTransform.sizeDelta = new Vector2(size * displayMultiplier, size * displayMultiplier);
 
-            Rect tmpRect = new Rect(webCam.width / 2 - rect.width / 2 + rect.x, webCam.height / 2 - rect.height / 2 + rect.y, rect.width, rect.height);
+                Rect tmpRect = new Rect(webCam.width / 2 - rect.width / 2 + rect.x, webCam.height / 2 - rect.height / 2 + rect.y, rect.width, rect.height);
 
-            texture = new Texture2D((int)tmpRect.width, (int)tmpRect.height);
+                texture = new Texture2D((int)tmpRect.width, (int)tmpRect.height);
 
-            texture.SetPixels(webCam.GetPixels((int)tmpRect.x, (int)tmpRect.y, (int)tmpRect.width, (int)tmpRect.height));
-            //texture.SetPixels(webCam.GetPixels());
-            TextureScale.Point(texture, size, size);
-            texture.SetPixels(ConvertContrasts(texture.GetPixels()));
-            texture.Apply();
+                texture.SetPixels(webCam.GetPixels((int)tmpRect.x, (int)tmpRect.y, (int)tmpRect.width, (int)tmpRect.height));
+                //texture.SetPixels(webCam.GetPixels());
+                TextureScale.Point(texture, size, size);
+                texture.SetPixels(ConvertContrasts(texture.GetPixels()));
+                texture.Apply();
+                if (rotate) SpriteGenerator.Rotate180(ref texture);
 
-            sprite = SpriteGenerator.Generate(texture);
-            sprite.texture.filterMode = FilterMode.Point;
-            sprite.texture.Apply();
+                sprite = SpriteGenerator.Generate(texture);
+                sprite.texture.filterMode = FilterMode.Point;
+                sprite.texture.Apply();
+
+                direction = sprite.PivotDirection();
+            }
+            else
+            {
+                if (render) render.rectTransform.sizeDelta = new Vector2(webCam.width, webCam.height);
+                texture = new Texture2D(webCam.width, webCam.height);
+                texture.SetPixels(webCam.GetPixels());
+                if (resize)
+                {
+                    int tmpSize = (int)(size * webCam.width / rect.width);
+
+                    TextureScale.Point(texture, tmpSize, tmpSize * webCam.height / webCam.width);
+                    texture.filterMode = FilterMode.Point;
+                }
+                if (desaturation) texture.SetPixels(ConvertContrasts(texture.GetPixels()));
+                texture.Apply();
+                if (rotate) SpriteGenerator.Rotate180(ref texture);
+
+                frame.Apply(new Rect(webCam.width / 2 - testRect.width / 2 + testRect.x, webCam.height / 2 - testRect.height / 2 + testRect.y, testRect.width, testRect.height));
+            }
             if (render) render.texture = texture;
+
+            
         }
 
 

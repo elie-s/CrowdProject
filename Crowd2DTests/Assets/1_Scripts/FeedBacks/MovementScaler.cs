@@ -7,7 +7,7 @@ namespace CrowdProject
     public class MovementScaler : MonoBehaviour
     {
         [SerializeField] private float multiplier = 5.0f;
-        private Vector2 oldPosition;
+        private Vector2 oldPosition = default;
         private Vector2 scaleRef;
 
         private void Start()

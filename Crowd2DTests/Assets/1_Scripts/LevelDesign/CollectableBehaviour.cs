@@ -2,48 +2,87 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectableBehaviour : MonoBehaviour
+namespace CrowdProject
 {
-    [SerializeField] private Object[] destroyedOnCollision;
-    [SerializeField] private AnimationCurve shrinkingCurve;
-    [SerializeField] private float shrinkingDuration;
-
-    private bool shrinking = false;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class CollectableBehaviour : MonoBehaviour
     {
-        if (shrinking) return;
+        [SerializeField] private Behaviour[] enableAfterPoping = default;
+        [SerializeField] private Object[] destroyedOnCollision = default;
+        [SerializeField] private CollectableScaleOverTimeSet shrink = default;
+        [SerializeField] private CollectableScaleOverTimeSet pop = default;
+        [SerializeField] private PhaseData phaseData = default;
 
+        private bool shrinking = false;
+        private bool poping = false;
+        private LDPhaseSettings phase;
 
-        if (collision.tag == "Player")
+        private void OnEnable()
         {
-            DestroyOnCollision();
-            StartCoroutine(Shrink());
-        }
-    }
-
-    private IEnumerator Shrink()
-    {
-        shrinking = true;
-        float timer = 0.0f;
-        Vector3 baseScale = transform.localScale;
-
-        while (timer<shrinkingDuration)
-        {
-            transform.localScale = baseScale * shrinkingCurve.Evaluate(timer / shrinkingDuration);
-
-            timer += Time.deltaTime;
-            yield return null;
+            phaseData?.AddCollectable();
+            StartCoroutine(Pop());
         }
 
-        Destroy(gameObject);
-    }
-
-    private void DestroyOnCollision()
-    {
-        for (int i = 0; i < destroyedOnCollision.Length; i++)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            Destroy(destroyedOnCollision[i]);
+            if (shrinking) return;
+
+            if (collision.tag == "Player")
+            {
+                if(phase) phase.RemoveCollectable(this);
+                phaseData?.RemoveCollectable();
+                DestroyOnCollision();
+                
+                StartCoroutine(Shrink());
+            }
+        }
+
+        private IEnumerator Shrink()
+        {
+            shrinking = true;
+
+            yield return StartCoroutine(shrink.Scale(transform));
+
+            Destroy(gameObject);
+        }
+
+        private IEnumerator Pop()
+        {
+            poping = true;
+
+            yield return StartCoroutine(pop.Scale(transform));
+
+            poping = false;
+            EnableComponents();
+        }
+
+        public void AddPhaseSettings(LDPhaseSettings _settings)
+        {
+            phase = _settings;
+            phase.AddCollectables(this);
+        }
+
+        private void DestroyOnCollision()
+        {
+            for (int i = 0; i < destroyedOnCollision.Length; i++)
+            {
+                Destroy(destroyedOnCollision[i]);
+            }
+        }
+
+        private void DisableComponents()
+        {
+            for (int i = 0; i < enableAfterPoping.Length; i++)
+            {
+                enableAfterPoping[i].enabled = false;
+            }
+        }
+
+        private void EnableComponents()
+        {
+            for (int i = 0; i < enableAfterPoping.Length; i++)
+            {
+                enableAfterPoping[i].enabled = true;
+            }
         }
     }
 }

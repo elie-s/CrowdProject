@@ -6,7 +6,7 @@ namespace CrowdProject
 {
     public class Pulse : MonoBehaviour
     {
-        [SerializeField] private PulsationSettings settings;
+        [SerializeField] private PulsationSettings settings = default;
         [SerializeField] private float delay = 0.5f;
         // Start is called before the first frame update
         void Start()

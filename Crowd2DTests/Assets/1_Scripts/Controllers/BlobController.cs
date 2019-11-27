@@ -8,7 +8,19 @@ namespace CrowdProject
     {
         [SerializeField] private WebCamManager webcam = default;
         [SerializeField] private float speed = 5.0f;
-        // Start is called before the first frame update
+        [SerializeField] private Transform debugDirection = default;
+        [SerializeField] private PhaseData phaseData;
+        [Header("Clamp Area")]
+        [SerializeField] private Rect[] areas = default;
+        private int areaIndex = 0;
+
+        private Rect area => areas[areaIndex];
+
+        private void Awake()
+        {
+            phaseData.EndPhaseRegisterCallback(NextRect);
+        }
+
         void Start()
         {
 
@@ -20,9 +32,31 @@ namespace CrowdProject
             Move();
         }
 
+        private void NextRect()
+        {
+            if (areaIndex < areas.Length - 1) areaIndex++;
+        }
+
         private void Move()
         {
             transform.position += webcam.direction * Time.deltaTime * speed;
+            debugDirection.localPosition = webcam.direction/transform.localScale.x;
+
+            ClampArea();
+        }
+
+        private void ClampArea()
+        {
+            float x = transform.position.x;//Mathf.Clamp(transform.position.x, area.xMax, area.xMin);
+            float y = transform.position.y; // Mathf.Clamp(transform.position.y, area.yMax, area.yMin);
+
+            if (x < area.x) x = area.x;
+            else if (x > area.x + area.width) x = area.x + area.width;
+
+            if (y < area.y) y = area.y;
+            else if (y > area.y + area.height) y = area.y + area.height;
+
+            transform.position = new Vector2(x, y);
         }
     }
 }

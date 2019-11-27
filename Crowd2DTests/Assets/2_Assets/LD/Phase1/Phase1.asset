@@ -15,10 +15,10 @@ MonoBehaviour:
   grid:
     dimensions:
       serializedVersion: 2
-      x: -8
-      y: -4
-      width: 16
-      height: 8
+      x: -6
+      y: -3.5
+      width: 12
+      height: 7
     size: {x: 3, y: 3}
   isFinished: 0
   collectablePrefab: {fileID: 3438806119222452884, guid: d3c1105d90202d14198e875808bcabf2,

@@ -28,7 +28,7 @@ namespace CrowdProject
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (colors[x + y * width].r < 0.5f)
+                    if (colors[x + y * width].a > 0.5f)
                     {
                         result += new Vector2(x, y);
                         amount++;
@@ -41,6 +41,32 @@ namespace CrowdProject
             result = new Vector2(result.x / width, result.y / height);
 
             return result;
+        }
+        
+        public static Vector2 PivotDirection(this Sprite _sprite)
+        {
+            Vector2 pivot = _sprite.pivot;
+            Rect rect = _sprite.rect;
+            float average = (Mathf.Abs((pivot.x / rect.width * 2 - 1)) + Mathf.Abs(pivot.y / rect.height * 2 - 1));
+
+            return new Vector2(pivot.x * 2 - rect.width, pivot.y * 2 - rect.height).normalized * average;
+        }
+
+        public static void Rotate180(ref Texture2D _texture)
+        {
+            for (int x = 0; x < _texture.width/2; x++)
+            {
+                for (int y = 0; y < _texture.height; y++)
+                {
+                    Color a = _texture.GetPixel(x, y);
+                    Color b = _texture.GetPixel(_texture.width - x, _texture.height - y);
+
+                    _texture.SetPixel(x, y, b);
+                    _texture.SetPixel(_texture.width - x, _texture.height - y, a);
+                }
+            }
+
+            _texture.Apply();
         }
     }
 }

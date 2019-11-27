@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8080035853052479737}
   - component: {fileID: 8080035853052479736}
   - component: {fileID: 8080035853052479739}
+  - component: {fileID: 8600017611981830732}
   m_Layer: 9
   m_Name: Blob
   m_TagString: Untagged
@@ -83,7 +84,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &8080035853052479492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,3 +182,17 @@ PolygonCollider2D:
     - - {x: -0.046952426, y: 0.012509674}
       - {x: -0.077403784, y: -0.065318525}
       - {x: -0.0052292347, y: -0.021571398}
+--- !u!114 &8600017611981830732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8080035853052479495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ef39e725b9ac44bb2065b85d28ee23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  webcam: {fileID: 0}
+  speed: 5

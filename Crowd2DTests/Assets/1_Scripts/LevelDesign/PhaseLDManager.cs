@@ -7,7 +7,8 @@ namespace CrowdProject
     public class PhaseLDManager : MonoBehaviour
     {
         [SerializeField] private LDPhaseSettings[] phases = default;
-        [SerializeField] private int index;
+        [SerializeField] private int index = 0;
+        [SerializeField] private CameraScaler scaler = default;
 
         private LDPhaseSettings currentPhase => phases[index];
 
@@ -28,8 +29,13 @@ namespace CrowdProject
         {
             foreach (LDPhaseSettings phaseSettings in phases)
             {
-                phaseSettings.Init();
+                phaseSettings.Init(OnPhaseFinished);
             }
+        }
+
+        private void OnPhaseFinished()
+        {
+            scaler.Scale();
         }
     }
 }
