@@ -144,7 +144,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  durationRef: 2.5
+  durationRef: 4
   maxDistance: 1.5
 --- !u!114 &1427442981094866899
 MonoBehaviour:

@@ -6,7 +6,8 @@ namespace CrowdProject
 {
     public static class SpriteGenerator
     {
-        public static int capted;
+        public static int capted { get; private set; }
+        public static float ratio { get; private set; }
 
         public static Sprite Generate(Texture2D _texture)
         {
@@ -38,7 +39,10 @@ namespace CrowdProject
                 }
             }
 
+            
             capted = amount;
+            ratio = (float)amount / (float)(width * height);
+            Debug.Log(ratio);
 
             result /= amount;
 

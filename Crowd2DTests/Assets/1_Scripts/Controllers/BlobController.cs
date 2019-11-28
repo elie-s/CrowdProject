@@ -7,6 +7,7 @@ namespace CrowdProject
     public class BlobController : MonoBehaviour
     {
         [SerializeField] private WebCamManager webcam = default;
+        [SerializeField] private AnimationCurve sizeRatioSpeedCurve = default;
         [SerializeField] private float speed = 5.0f;
         [SerializeField] private Transform debugDirection = default;
         [SerializeField] private PhaseData phaseData;
@@ -34,8 +35,10 @@ namespace CrowdProject
 
         private void Move()
         {
-            transform.position += webcam.direction * Time.deltaTime * speed;
+            Debug.Log(sizeRatioSpeedCurve.Evaluate(SpriteGenerator.ratio) + " - " + SpriteGenerator.ratio);
+            transform.position += webcam.direction * Time.deltaTime * speed*sizeRatioSpeedCurve.Evaluate(SpriteGenerator.ratio);
             debugDirection.localPosition = webcam.direction/transform.localScale.x;
+            debugDirection.eulerAngles = new Vector3(0, 0, Mathf.Atan2(webcam.direction.normalized.y, webcam.direction.normalized.x) * Mathf.Rad2Deg+180);
 
             ClampArea();
         }
