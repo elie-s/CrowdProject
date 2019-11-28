@@ -18,6 +18,7 @@ namespace CrowdProject
         // Start is called before the first frame update
         void Start()
         {
+            if (!player) player = GameObject.Find("Player").transform;
             StartCoroutine(StartMove());
         }
 

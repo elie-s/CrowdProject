@@ -355,12 +355,27 @@ PrefabInstance:
     - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
         type: 3}
       propertyPath: testRect.width
-      value: 100
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
         type: 3}
       propertyPath: testRect.height
-      value: 100
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: ceil
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: perSecondUpdate
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 446654971568712118, guid: 0c51e255dcbdd8b4db151ece6670905a,
         type: 3}

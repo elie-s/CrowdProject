@@ -281,6 +281,26 @@ PrefabInstance:
       propertyPath: perSecondUpdate
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: ceil
+      value: 0.226
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: rect.width
+      value: 285
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: rect.height
+      value: 285
+      objectReference: {fileID: 0}
     - target: {fileID: 446654971568712118, guid: 0c51e255dcbdd8b4db151ece6670905a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -630,7 +650,7 @@ PrefabInstance:
     - target: {fileID: 8600017611981830732, guid: 3c1e422c17c66ff43993b7f8332ca9e4,
         type: 3}
       propertyPath: speed
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8600017611981830732, guid: 3c1e422c17c66ff43993b7f8332ca9e4,
         type: 3}

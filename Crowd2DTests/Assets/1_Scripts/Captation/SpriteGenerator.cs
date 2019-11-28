@@ -6,6 +6,8 @@ namespace CrowdProject
 {
     public static class SpriteGenerator
     {
+        public static int capted;
+
         public static Sprite Generate(Texture2D _texture)
         {
             Vector2 pivot = Pivot(_texture);
@@ -35,6 +37,8 @@ namespace CrowdProject
                     }
                 }
             }
+
+            capted = amount;
 
             result /= amount;
 

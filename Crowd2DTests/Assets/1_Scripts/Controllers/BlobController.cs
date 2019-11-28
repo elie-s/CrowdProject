@@ -16,14 +16,9 @@ namespace CrowdProject
 
         private Rect area => areas[areaIndex];
 
-        private void Awake()
+        private void Start()
         {
             phaseData.EndPhaseRegisterCallback(NextRect);
-        }
-
-        void Start()
-        {
-
         }
 
         // Update is called once per frame
@@ -58,5 +53,7 @@ namespace CrowdProject
 
             transform.position = new Vector2(x, y);
         }
+
+        public enum orientation { Rotate0, Rotate90, Rotate180, Rotate270 }
     }
 }

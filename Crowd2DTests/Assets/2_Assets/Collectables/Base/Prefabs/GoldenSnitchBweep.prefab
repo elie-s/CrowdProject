@@ -115,9 +115,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   area:
     serializedVersion: 2
-    x: -8
+    x: -9
     y: -4
-    width: 16
+    width: 18
     height: 8
   player: {fileID: 0}
   celerityCurve:
@@ -144,7 +144,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  durationRef: 1
+  durationRef: 2.5
   maxDistance: 1.5
 --- !u!114 &1427442981094866899
 MonoBehaviour:
@@ -161,8 +161,8 @@ MonoBehaviour:
   enableAfterPoping: []
   destroyedOnCollision:
   - {fileID: 3438806119222452883}
-  shrink: {fileID: 0}
-  pop: {fileID: 0}
+  shrink: {fileID: 11400000, guid: 5b9827f9d8ff09d4b8923ec06e71311b, type: 2}
+  pop: {fileID: 11400000, guid: 50c69f317c2a2c645851394cab00a610, type: 2}
   phaseData: {fileID: 11400000, guid: 9a5c0f34ddee7944b94d13d4b3a38eb9, type: 2}
 --- !u!114 &3438806119222452883
 MonoBehaviour:
