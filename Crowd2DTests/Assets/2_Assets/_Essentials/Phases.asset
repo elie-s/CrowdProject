@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5d6d3cc99a2e74ca2dd3afb93aab31, type: 3}
   m_Name: Phases
   m_EditorClassIdentifier: 
+  score: {fileID: 11400000, guid: 05112812070aad247bfdc10759be0f64, type: 2}

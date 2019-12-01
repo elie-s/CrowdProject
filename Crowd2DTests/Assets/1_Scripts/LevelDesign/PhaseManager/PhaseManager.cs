@@ -13,10 +13,12 @@ namespace CrowdProject
         [SerializeField] private float delayBetweenParts = 1.5f;
         [SerializeField] private bool finished = false;
 
+        private GameObject currentPhase = default;
+
         private void Awake()
         {
             phaseData.Reset();
-            phaseData.GetCollectableRegisterCallback(score.AddCollectable);
+            //phaseData.GetCollectableRegisterCallback(score.AddCollectable);
             phaseData.NextPartRegisterCallback(NextPart);
             partIndex = -1;
             finished = false;
@@ -30,11 +32,12 @@ namespace CrowdProject
 
         private void LoadPart()
         {
-            Instantiate(parts[partIndex], transform);
+            currentPhase = Instantiate(parts[partIndex], transform);
         }
 
         private void NextPart()
         {
+            Destroy(currentPhase);
             StartCoroutine(NextPartRoutine());
         }
 

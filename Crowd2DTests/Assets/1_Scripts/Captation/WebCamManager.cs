@@ -26,6 +26,9 @@ namespace CrowdProject
         [SerializeField] private bool desaturation = false;
         [SerializeField] private Frame frame = default;
         [SerializeField] private Rect testRect;
+        [Header("Debug Controller")]
+        [SerializeField] private bool debugControllerEnabled = false;
+        [SerializeField] private float debugControllerSpeed = 5.0f;
         [Header("Compute Shader")]
         [SerializeField] private ComputeShader webcamProcessing = default;
         [SerializeField] private Vector3Int threadGroups = new Vector3Int(8, 8, 1);
@@ -33,6 +36,7 @@ namespace CrowdProject
         private WebCamTexture webCam;
         private Color[] oldPixels;
         private IEnumerator spriteRoutine;
+        private bool nullDetection = false;
 
         private void Awake()
         {
@@ -50,6 +54,7 @@ namespace CrowdProject
 
         private void Update()
         {
+            if(debugControllerEnabled) DebugController();
             //UpdateTexture();
             //UpdateMeshPos();
             //UpdateSprite();
@@ -108,6 +113,14 @@ namespace CrowdProject
             oldPixels = new Color[webCam.width / webCam.height * size * size];
         }
 
+        private void DebugController()
+        {
+            float x = Input.GetKey(KeyCode.LeftArrow) ? Time.deltaTime * debugControllerSpeed : (Input.GetKey(KeyCode.RightArrow) ? -Time.deltaTime * debugControllerSpeed : 0.0f);
+            float y = Input.GetKey(KeyCode.DownArrow) ? Time.deltaTime * debugControllerSpeed : (Input.GetKey(KeyCode.UpArrow) ? -Time.deltaTime * debugControllerSpeed : 0.0f);
+
+            rect.Set(rect.x + x, rect.y + y, rect.width, rect.height);
+        }
+
 
         private void UpdateTexture()
         {
@@ -151,11 +164,20 @@ namespace CrowdProject
                 texture.Apply();
                 if (rotate) SpriteGenerator.Rotate180(ref texture);
 
-                sprite = SpriteGenerator.Generate(texture);
-                sprite.texture.filterMode = FilterMode.Point;
-                sprite.texture.Apply();
+                if (!nullDetection)
+                {
 
-                direction = sprite.PivotDirection();
+                    sprite = SpriteGenerator.Generate(texture);
+                    sprite.texture.filterMode = FilterMode.Point;
+                    sprite.texture.Apply();
+
+                    direction = sprite.PivotDirection();
+                }
+                else
+                {
+                    direction = Vector2.zero;
+                    Debug.LogWarning("Webcam no longer detects any shape !");
+                }
             }
             else
             {
@@ -174,6 +196,8 @@ namespace CrowdProject
                 if (rotate) SpriteGenerator.Rotate180(ref texture);
 
                 frame.Apply(new Rect(webCam.width / 2 - testRect.width / 2 + testRect.x, webCam.height / 2 - testRect.height / 2 + testRect.y, testRect.width, testRect.height));
+
+                if(nullDetection) Debug.LogWarning("Webcam no longer detects any shape !");
             }
             if (render) render.texture = texture;
 
@@ -183,6 +207,7 @@ namespace CrowdProject
 
         private Color[] ConvertContrasts(Color[] _colors)
         {
+            nullDetection = true;
             Color[] result = new Color[_colors.Length];
             float[] values = new float[_colors.Length];
 
@@ -209,11 +234,12 @@ namespace CrowdProject
                 if (value == oldPixels[i].r)
                 {
                     result[i] = new Color(value, value, value, value);
+                    if(value > 0.5f) nullDetection = false;
                 }
                 else
                 {
                     result[i] = oldPixels[i];
-                    oldPixels[i] = new Color(value, value, value);
+                    oldPixels[i] = new Color(value, value, value, value);
                 }
             }
 

@@ -42,7 +42,7 @@ namespace CrowdProject
             
             capted = amount;
             ratio = (float)amount / (float)(width * height);
-            Debug.Log(ratio);
+            //Debug.Log(ratio);
 
             result /= amount;
 

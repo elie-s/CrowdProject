@@ -35,7 +35,7 @@ namespace CrowdProject
 
         private void Move()
         {
-            Debug.Log(sizeRatioSpeedCurve.Evaluate(SpriteGenerator.ratio) + " - " + SpriteGenerator.ratio);
+            //Debug.Log(sizeRatioSpeedCurve.Evaluate(SpriteGenerator.ratio) + " - " + SpriteGenerator.ratio);
             transform.position += webcam.direction * Time.deltaTime * speed*sizeRatioSpeedCurve.Evaluate(SpriteGenerator.ratio);
             debugDirection.localPosition = webcam.direction/transform.localScale.x;
             debugDirection.eulerAngles = new Vector3(0, 0, Mathf.Atan2(webcam.direction.normalized.y, webcam.direction.normalized.x) * Mathf.Rad2Deg+180);
