@@ -12,13 +12,14 @@ namespace CrowdProject
         [Header("Components")]
         [SerializeField] private TextMeshProUGUI scoreDisplay = default;
         [SerializeField] private TextMeshProUGUI bweepsDisplay = default;
+        [Header("Feedbacks")]
+        [SerializeField] private Pulse bweepsPulse = default;
 
-        // Start is called before the first frame update
         void Start()
         {
-            phase.AddCollectableRegisterCallback(SetBweeps);
-            score.UpdateValueCallbackRegister(SetBweeps);
-            score.UpdateValueCallbackRegister(SetScore);
+            phase.collectableAdd.Register(SetBweeps);
+            score.onUpdateValue.Register(SetBweeps);
+            score.onUpdateValue.Register(SetScore);
             SetScore();
             SetBweeps();
         }
@@ -26,6 +27,7 @@ namespace CrowdProject
         private void SetBweeps()
         {
             bweepsDisplay.text = (score.collectables+"<color=#FFFFFFBB>/"+score.maxCollectables+"</color>").ToString();
+            bweepsPulse.Play();
         }
 
         private void SetScore()

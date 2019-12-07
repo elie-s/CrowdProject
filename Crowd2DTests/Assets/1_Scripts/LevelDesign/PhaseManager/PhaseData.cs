@@ -9,29 +9,26 @@ namespace CrowdProject
     {
         [SerializeField] private ScoreData score = default;
         private int collectablesLeft = 0;
-        private List<System.Action> nextPartCallbacks = default;
-        private List<System.Action> endPhaseCallbacks = default;
-        private List<System.Action> collectableGetCallbacks = default;
-        private List<System.Action> collectableAddCallbacks = default;
-
-        private bool disableCallbacks = false;
-
+        public Callback nextPart = default;
+        public Callback startPhase = default;
+        public Callback endPhase = default;
+        public Callback collectableGot = default;
+        public Callback collectableAdd = default;
 
         public void Init()
         {
             score.Init();
             collectablesLeft = 0;
-            disableCallbacks = false;
-            nextPartCallbacks = new List<System.Action>();
-            endPhaseCallbacks = new List<System.Action>();
-            collectableGetCallbacks = new List<System.Action>();
-            collectableAddCallbacks = new List<System.Action>();
+            nextPart = new Callback();
+            startPhase = new Callback();
+            endPhase = new Callback();
+            collectableGot = new Callback();
+            collectableAdd = new Callback();
         }
 
         public void Reset()
         {
             collectablesLeft = 0;
-            nextPartCallbacks = new List<System.Action>();
         }
 
         public void AddCollectable()
@@ -51,66 +48,22 @@ namespace CrowdProject
 
         private void OnPartEnd()
         {
-            if (disableCallbacks) return;
-
-            Debug.Log("OnPartEnd()");
-            for (int i = 0; i < nextPartCallbacks.Count; i++)
-            {
-                nextPartCallbacks[i]();
-            }
+            nextPart.Call();
         }
 
         private void OnCollectableGot()
         {
-            if (disableCallbacks) return;
-
-            Debug.Log("OnCollectableGot(): "+collectableGetCallbacks.Count);
-            for (int i = 0; i < collectableGetCallbacks.Count; i++)
-            {
-                collectableGetCallbacks[i]();
-            }
+            collectableGot.Call();
         }
 
         private void OnCollectableAdded()
         {
-            if (disableCallbacks) return;
-
-            Debug.Log("OnCollectableAdded()");
-            for (int i = 0; i < collectableAddCallbacks.Count; i++)
-            {
-                collectableAddCallbacks[i]();
-            }
+            collectableAdd.Call();
         }
 
         public void OnPhaseEnd()
         {
-            if (disableCallbacks) return;
-
-            Debug.Log("OnPhaseEnd()");
-            for (int i = 0; i < endPhaseCallbacks.Count; i++)
-            {
-                endPhaseCallbacks[i]();
-            }
-        }
-
-        public void NextPartRegisterCallback(System.Action _callback)
-        {
-            nextPartCallbacks.Add(_callback);
-        }
-
-        public void EndPhaseRegisterCallback(System.Action _callback)
-        {
-            endPhaseCallbacks.Add(_callback);
-        }
-
-        public void GetCollectableRegisterCallback(System.Action _callback)
-        {
-            collectableGetCallbacks.Add(_callback);
-        }
-
-        public void AddCollectableRegisterCallback(System.Action _callback)
-        {
-            collectableAddCallbacks.Add(_callback);
+            endPhase.Call();
         }
     }
 }

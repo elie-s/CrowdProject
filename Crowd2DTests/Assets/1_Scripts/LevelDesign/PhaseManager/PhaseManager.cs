@@ -6,12 +6,11 @@ namespace CrowdProject
 {
     public class PhaseManager : MonoBehaviour
     {
-        [SerializeField] private ScoreData score = default;
+        //[SerializeField] private ScoreData score = default;
         [SerializeField] private GameObject[] parts = default;
         [SerializeField] private int partIndex = -1;
         [SerializeField] private PhaseData phaseData = default;
         [SerializeField] private float delayBetweenParts = 1.5f;
-        [SerializeField] private bool finished = false;
 
         private GameObject currentPhase = default;
 
@@ -19,9 +18,8 @@ namespace CrowdProject
         {
             phaseData.Reset();
             //phaseData.GetCollectableRegisterCallback(score.AddCollectable);
-            phaseData.NextPartRegisterCallback(NextPart);
+            phaseData.nextPart.Register(NextPart);
             partIndex = -1;
-            finished = false;
         }
 
 
@@ -48,7 +46,7 @@ namespace CrowdProject
 
             if (partIndex == parts.Length)
             {
-                finished = true;
+                phaseData.nextPart.Unregister(NextPart);
                 phaseData.OnPhaseEnd();
             }
             else LoadPart();

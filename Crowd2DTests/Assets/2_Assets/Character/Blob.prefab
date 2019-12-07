@@ -355,6 +355,31 @@ MonoBehaviour:
   speed: 4
   debugDirection: {fileID: 513186233168867811}
   phaseData: {fileID: 11400000, guid: 9a5c0f34ddee7944b94d13d4b3a38eb9, type: 2}
+  repulsionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -3.807117
+      outSlope: -3.807117
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.08615819
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.8545198
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  repulsionDuration: 2
   areas:
   - serializedVersion: 2
     x: -6

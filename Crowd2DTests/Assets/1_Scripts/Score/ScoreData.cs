@@ -13,7 +13,7 @@ namespace CrowdProject
         public int baseScoring = 10;
         public int multiplier = 1;
 
-        private List<System.Action> updatingValueCallbacks = default;
+        public Callback onUpdateValue;
 
         public void AddCollectable()
         {
@@ -37,21 +37,12 @@ namespace CrowdProject
             baseScoring = 10;
             multiplier = 1;
 
-            updatingValueCallbacks = new List<System.Action>();
+            onUpdateValue = new Callback();
         }
 
         private void OnUpdatedValues()
         {
-            Debug.Log("OnUpdatedValues()");
-            for (int i = 0; i < updatingValueCallbacks.Count; i++)
-            {
-                updatingValueCallbacks[i]();
-            }
-        }
-
-        public void UpdateValueCallbackRegister(System.Action _callback)
-        {
-            updatingValueCallbacks.Add(_callback);
+            onUpdateValue.Call();
         }
     }
 }

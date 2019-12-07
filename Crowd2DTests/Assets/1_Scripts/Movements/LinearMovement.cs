@@ -10,8 +10,8 @@ namespace CrowdProject
         [SerializeField] private AnimationCurve curve = default;
         [SerializeField] private float duration = 1.0f;
         [SerializeField] private float delay = 0.0f;
-        [SerializeField] private Vector2 direction;
-        [SerializeField] private float range;
+        [SerializeField] private Vector2 direction = default;
+        [SerializeField] private float range = 1.0f;
         public override IEnumerator Move(Transform _transform, Vector3 _origin)
         {
             Vector3 startPos = _origin - (Vector3)direction.normalized * range / 2.0f;

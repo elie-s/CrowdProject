@@ -29,9 +29,9 @@ namespace CrowdProject
         [Header("Debug Controller")]
         [SerializeField] private bool debugControllerEnabled = false;
         [SerializeField] private float debugControllerSpeed = 5.0f;
-        [Header("Compute Shader")]
-        [SerializeField] private ComputeShader webcamProcessing = default;
-        [SerializeField] private Vector3Int threadGroups = new Vector3Int(8, 8, 1);
+        //[Header("Compute Shader")]
+        //[SerializeField] private ComputeShader webcamProcessing = default;
+        //[SerializeField] private Vector3Int threadGroups = new Vector3Int(8, 8, 1);
 
         private WebCamTexture webCam;
         private Color[] oldPixels;

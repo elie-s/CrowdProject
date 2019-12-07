@@ -13,27 +13,28 @@ namespace CrowdProject
         [SerializeField] private GameObject[] borders = default;
         [SerializeField] private int phaseIndex = -1;
         [SerializeField] private float delayBetweenPhases = 1.5f;
+        [Header("Transition")]
+        [SerializeField] private GameObject transition = default;
+        [SerializeField] private float transitionDuration = 5.0f;
+        [Header("Audio Sources")]
+        [SerializeField] private AudioSource getBweep = default;
+        [SerializeField] private RandomSource endPart = default;
 
         private void Awake()
         {
             score.Init();
             phaseData.Init();
-            phaseData.EndPhaseRegisterCallback(NextPhase);
-            phaseData.EndPhaseRegisterCallback(camScaler.Scale);
+            phaseData.collectableGot.Register(getBweep.Play);
+            phaseData.nextPart.Register(endPart.Play);
+            phaseData.endPhase.Register(NextPhase);
+            phaseData.endPhase.Register(camScaler.Scale);
             phaseIndex = -1;
 
         }
 
-        // Start is called before the first frame update
         void Start()
         {
             StartCoroutine(NextPhaseRoutine());
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
         }
 
         private void NextPhase()

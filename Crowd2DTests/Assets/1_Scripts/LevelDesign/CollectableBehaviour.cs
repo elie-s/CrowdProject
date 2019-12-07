@@ -29,7 +29,7 @@ namespace CrowdProject
             if (collision.tag == "Player")
             {
                 //if(phase) phase.RemoveCollectable(this);
-                Debug.Log("collision with: " + gameObject.name);
+               // Debug.Log("collision with: " + gameObject.name);
                 phaseData?.RemoveCollectable();
                 DestroyOnCollision();
                 

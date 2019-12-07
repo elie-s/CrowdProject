@@ -10,7 +10,10 @@ namespace CrowdProject
         [SerializeField] private AnimationCurve sizeRatioSpeedCurve = default;
         [SerializeField] private float speed = 5.0f;
         [SerializeField] private Transform debugDirection = default;
-        [SerializeField] private PhaseData phaseData;
+        [SerializeField] private PhaseData phaseData = default;
+        [Header("Repulsion")]
+        [SerializeField] private AnimationCurve repulsionCurve = default;
+        [SerializeField] private float repulsionDuration = 2.0f;
         [Header("Clamp Area")]
         [SerializeField] private Rect[] areas = default;
         private int areaIndex = 0;
@@ -19,13 +22,20 @@ namespace CrowdProject
 
         private void Start()
         {
-            phaseData.EndPhaseRegisterCallback(NextRect);
+            phaseData.endPhase.Register(NextRect);
         }
 
         // Update is called once per frame
         void Update()
         {
             Move();
+
+            
+        }
+
+        private void LateUpdate()
+        {
+            ClampArea();
         }
 
         private void NextRect()
@@ -40,8 +50,27 @@ namespace CrowdProject
             debugDirection.localPosition = webcam.direction/transform.localScale.x;
             debugDirection.eulerAngles = new Vector3(0, 0, Mathf.Atan2(webcam.direction.normalized.y, webcam.direction.normalized.x) * Mathf.Rad2Deg+180);
 
-            ClampArea();
+            
         }
+
+        public void Repulse(Vector2 _direction, float _force)
+        {
+            StartCoroutine(RepulsionRoutine(_direction, _force));
+        }
+
+        private IEnumerator RepulsionRoutine(Vector2 _direction, float _force)
+        {
+            float timer = 0.0f;
+
+            while (timer < repulsionDuration)
+            {
+                transform.position += (Vector3)_direction * Time.deltaTime * _force * repulsionCurve.Evaluate(timer / repulsionDuration);
+
+                yield return null;
+                timer += Time.deltaTime;
+            }
+        }
+
 
         private void ClampArea()
         {
