@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CrowdProject.Analytics;
 
 namespace CrowdProject
 {
@@ -26,6 +27,9 @@ namespace CrowdProject
         [SerializeField] private bool desaturation = false;
         [SerializeField] private Frame frame = default;
         [SerializeField] private Rect testRect;
+        [Header("Analytics")]
+        [SerializeField] private RecordingMode recordingMode = RecordingMode.None;
+        [SerializeField] private GameRecordAsset recordAsset = default;
         [Header("Debug Controller")]
         [SerializeField] private bool debugControllerEnabled = false;
         [SerializeField] private float debugControllerSpeed = 5.0f;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace CrowdProject
 {
@@ -13,6 +14,11 @@ namespace CrowdProject
         [SerializeField] private GameObject[] borders = default;
         [SerializeField] private int phaseIndex = -1;
         [SerializeField] private float delayBetweenPhases = 1.5f;
+        [Header("feedback")]
+        [SerializeField] private AnimationCurve bloomCurve = default;
+        [SerializeField] private float bloomMax = 40.0f;
+        [SerializeField] private float feedbackDuration = 0.2f;
+        [SerializeField] private PostProcessProfile postProcess = default;
         [Header("Transition")]
         [SerializeField] private GameObject transition = default;
         [SerializeField] private float transitionDuration = 5.0f;
@@ -24,7 +30,7 @@ namespace CrowdProject
         {
             score.Init();
             phaseData.Init();
-            phaseData.collectableGot.Register(getBweep.Play);
+            phaseData.collectableGot.Register(BweepFeedback);
             phaseData.nextPart.Register(endPart.Play);
             phaseData.endPhase.Register(NextPhase);
             phaseData.endPhase.Register(camScaler.Scale);
@@ -53,6 +59,34 @@ namespace CrowdProject
 
             }
             else LoadPhase();
+        }
+
+        private IEnumerator BloomBweepRoutine()
+        {
+            float timer = 0.0f;
+            Bloom bloom = postProcess.settings[0] as Bloom;
+            LensDistortion lens = postProcess.settings[1] as LensDistortion;
+
+            float baseIntensity = 4.0f;
+            float baseLens = 0.0f;
+
+            while (timer < feedbackDuration)
+            {
+                bloom.intensity.value = Mathf.Lerp(baseIntensity, bloomMax, bloomCurve.Evaluate(timer / feedbackDuration));
+                lens.intensity.value = Mathf.Lerp(baseLens, 20, bloomCurve.Evaluate(timer / feedbackDuration));
+
+                yield return null;
+                timer += Time.deltaTime;
+            }
+
+            bloom.intensity.value = baseIntensity;
+            lens.intensity.value = baseLens;
+        }
+
+        private void BweepFeedback()
+        {
+            getBweep.Play();
+            StartCoroutine(BloomBweepRoutine());
         }
 
         private void LoadPhase()

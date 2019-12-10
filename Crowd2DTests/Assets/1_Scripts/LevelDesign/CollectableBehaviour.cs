@@ -11,6 +11,9 @@ namespace CrowdProject
         [SerializeField] private CollectableScaleOverTimeSet shrink = default;
         [SerializeField] private CollectableScaleOverTimeSet pop = default;
         [SerializeField] private PhaseData phaseData = default;
+        [Header("Get To The Score")]
+        [SerializeField] private AnimationCurve movementCurve = default;
+        [SerializeField] private float reachDuration = 0.55f;
 
         private bool shrinking = false;
         private bool poping = false;
@@ -30,10 +33,10 @@ namespace CrowdProject
             {
                 //if(phase) phase.RemoveCollectable(this);
                // Debug.Log("collision with: " + gameObject.name);
-                phaseData?.RemoveCollectable();
-                DestroyOnCollision();
+                //phaseData?.RemoveCollectable();
+                //DestroyOnCollision();
                 
-                StartCoroutine(Shrink());
+                StartCoroutine(ReachScore());
             }
         }
 
@@ -44,6 +47,30 @@ namespace CrowdProject
             yield return StartCoroutine(shrink.Scale(transform));
 
             Destroy(gameObject);
+        }
+
+        private IEnumerator ReachScore()
+        {
+            Vector3 goal = GameObject.Find("Circle#1").transform.position;
+            Vector3 start = transform.position;
+
+            DestroyOnCollision();
+
+            float timer = 0.0f;
+
+            shrinking = true;
+
+            while (timer<reachDuration)
+            {
+                transform.position = Vector3.Lerp(start, goal, movementCurve.Evaluate(timer / reachDuration));
+
+                yield return null;
+                timer += Time.deltaTime;
+            }
+
+            transform.position = goal;
+            phaseData?.RemoveCollectable();
+            
         }
 
         private IEnumerator Pop()

@@ -130,9 +130,35 @@ MonoBehaviour:
   enableAfterPoping: []
   destroyedOnCollision:
   - {fileID: 3438806119222452883}
+  - {fileID: 3010025474185921975}
   shrink: {fileID: 11400000, guid: 5b9827f9d8ff09d4b8923ec06e71311b, type: 2}
   pop: {fileID: 11400000, guid: 50c69f317c2a2c645851394cab00a610, type: 2}
   phaseData: {fileID: 11400000, guid: 9a5c0f34ddee7944b94d13d4b3a38eb9, type: 2}
+  movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0.00312163
+      outSlope: -0.00312163
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.6963276
+    - serializedVersion: 3
+      time: 1
+      value: 1.0017738
+      inSlope: 0.0039298837
+      outSlope: 0.0039298837
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.45197737
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reachDuration: 0.55
 --- !u!114 &3438806119222452883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: a942be25631856a40a897e90bb70a525, type: 2}
   delay: 0.5
+  loop: 1
+  playOnStart: 1
 --- !u!50 &9215436128526106515
 Rigidbody2D:
   serializedVersion: 4
