@@ -276,7 +276,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!60 &8080035853052479739
 PolygonCollider2D:
@@ -318,6 +318,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ef39e725b9ac44bb2065b85d28ee23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  repulsionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -3.807117
+      outSlope: -3.807117
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.08615819
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.8545198
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  repulsionDuration: 2
   webcam: {fileID: 0}
   sizeRatioSpeedCurve:
     serializedVersion: 2
@@ -355,31 +380,6 @@ MonoBehaviour:
   speed: 4
   debugDirection: {fileID: 513186233168867811}
   phaseData: {fileID: 11400000, guid: 9a5c0f34ddee7944b94d13d4b3a38eb9, type: 2}
-  repulsionCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -3.807117
-      outSlope: -3.807117
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.08615819
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.8545198
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  repulsionDuration: 2
   areas:
   - serializedVersion: 2
     x: -6

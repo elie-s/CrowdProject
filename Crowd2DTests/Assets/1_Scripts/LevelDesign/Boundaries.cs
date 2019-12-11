@@ -20,6 +20,15 @@ namespace CrowdProject
                 //Debug.Log("Repulse: " + col.direction);
                 col.Repulse(GetBounceDirection(col.direction), force * col.inertia);
             }
+
+            if (collision.tag == "Bounceable")
+            {
+
+                MovementBehaviour col = collision.GetComponent<MovementBehaviour>();
+                //Debug.Log("Repulse: " + col.name);
+                //Debug.Log("Repulse: " + col.direction);
+                col.Repulse(GetBounceDirection(col.direction), force * col.inertia);
+            }
         }
 
         private Vector2 GetBounceDirection(Vector2 _direction)

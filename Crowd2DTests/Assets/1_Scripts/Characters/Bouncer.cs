@@ -16,9 +16,12 @@ namespace CrowdProject
         [SerializeField] private SpriteRenderer sRenderer = default;
         [SerializeField] private AudioSource sfx = default;
 
+        private Vector3 baseScale;
+
         private void Start()
         {
             sRenderer.color = feedbackColor.Evaluate(0);
+            baseScale = transform.localScale;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -29,12 +32,18 @@ namespace CrowdProject
                 StartCoroutine(FeedbackRoutine());
                 sfx.Play();
             }
+
+            if (collision.tag == "Bounceable")
+            {
+                collision.GetComponent<MovementBehaviour>()?.Repulse((collision.transform.position - transform.position).normalized, baseForce);
+                StartCoroutine(FeedbackRoutine());
+                sfx.Play();
+            }
         }
 
         private IEnumerator FeedbackRoutine()
         {
             float timer = 0.0f;
-            Vector3 baseScale = transform.localScale;
 
             while (timer < feedbackDuration)
             {

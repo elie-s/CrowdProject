@@ -110,7 +110,8 @@ namespace CrowdProject
         {
             for (int i = 0; i < enableAfterPoping.Length; i++)
             {
-                enableAfterPoping[i].enabled = true;
+                if(enableAfterPoping[i]!= null)
+                    enableAfterPoping[i].enabled = true;
             }
         }
     }

@@ -11,13 +11,13 @@ namespace CrowdProject
         [SerializeField] private float speed = 5.0f;
         [SerializeField] private bool clockwise = false;
 
-        public override IEnumerator Move(Transform _transform, Vector3 _origin)
+        public override IEnumerator Move(Transform _transform, Vector3 _origin, float _multiplier)
         {
             float angle = 0.0f;
 
             while (true)
             {
-                _transform.position = new Vector2((float)System.Math.Round(radius * Mathf.Cos(angle * Mathf.Deg2Rad), 6) + _origin.x, (float)System.Math.Round(radius * Mathf.Sin(angle * Mathf.Deg2Rad), 6) + _origin.y);
+                _transform.position = new Vector2((float)System.Math.Round(_multiplier * radius * Mathf.Cos(angle * Mathf.Deg2Rad), 6) + _origin.x, (float)System.Math.Round(_multiplier * radius * Mathf.Sin(angle * Mathf.Deg2Rad), 6) + _origin.y);
                 IncrementAngle(ref angle);
                 yield return null;
             }

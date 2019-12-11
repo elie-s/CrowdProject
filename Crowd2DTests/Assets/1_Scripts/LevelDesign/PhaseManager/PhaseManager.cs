@@ -35,7 +35,7 @@ namespace CrowdProject
 
         private void NextPart()
         {
-            Destroy(currentPhase);
+            //Destroy(currentPhase);
             StartCoroutine(NextPartRoutine());
         }
 
