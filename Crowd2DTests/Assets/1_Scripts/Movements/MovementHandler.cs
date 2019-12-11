@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CrowdProject
 {
-    public class MovementHandler : MonoBehaviour
+    public class MovementHandler : MovementBehaviour
     {
         [SerializeField] private MovementSet movement = default;
 

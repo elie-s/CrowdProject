@@ -10,18 +10,23 @@ namespace CrowdProject
         [SerializeField] private AnimationCurve repulsionCurve = default;
         [SerializeField] private float repulsionDuration = 2.0f;
 
-        private Vector3 oldPosition = Vector3.zero;
+        protected Vector3 oldPosition = Vector3.zero;
         private IEnumerator repulse;
 
-        public Vector3 direction => (transform.position - oldPosition).normalized;
+        public Vector3 direction { get; private set; } //=> (transform.position - oldPosition).normalized;
+        public float inertia { get; private set; }
 
         private void Awake()
         {
             repulse = RepulsionRoutine(Vector2.zero, 0);
         }
 
-        private void LateUpdate()
+        protected virtual void LateUpdate()
         {
+            //oldPosition = transform.position;
+            direction = (transform.position - oldPosition).normalized;
+            inertia = (transform.position - oldPosition).magnitude / Time.deltaTime;
+            //Debug.Log(oldPosition + " - " + direction);
             oldPosition = transform.position;
         }
 

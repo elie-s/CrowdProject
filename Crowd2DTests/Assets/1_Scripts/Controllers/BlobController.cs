@@ -28,12 +28,12 @@ namespace CrowdProject
         {
             Move();
 
-            
+            if (Input.GetKeyDown(KeyCode.R)) transform.position = Vector3.zero;
         }
 
-        private void LateUpdate()
+        protected override void LateUpdate()
         {
-            //ClampArea();
+            base.LateUpdate();
         }
 
         private void NextRect()

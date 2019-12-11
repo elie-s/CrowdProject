@@ -114,6 +114,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4d4617e92154c4fb6d95b7d987f5c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  repulsionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  repulsionDuration: 1
   movement: {fileID: 11400000, guid: 242719cfa598efa48adde5985bdf9b45, type: 2}
 --- !u!114 &1427442981094866899
 MonoBehaviour:
@@ -131,6 +156,7 @@ MonoBehaviour:
   destroyedOnCollision:
   - {fileID: 3438806119222452883}
   - {fileID: 3010025474185921975}
+  - {fileID: 3438806119222452880}
   shrink: {fileID: 11400000, guid: 5b9827f9d8ff09d4b8923ec06e71311b, type: 2}
   pop: {fileID: 11400000, guid: 50c69f317c2a2c645851394cab00a610, type: 2}
   phaseData: {fileID: 11400000, guid: 9a5c0f34ddee7944b94d13d4b3a38eb9, type: 2}

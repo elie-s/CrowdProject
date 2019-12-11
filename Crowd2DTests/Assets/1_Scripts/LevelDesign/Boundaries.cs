@@ -14,9 +14,11 @@ namespace CrowdProject
         {
             if (collision.tag == "Player")
             {
+                
                 MovementBehaviour col = collision.GetComponent<MovementBehaviour>();
-
-                col.Repulse(GetBounceDirection(col.direction), force);
+                //Debug.Log("Repulse: " + col.name);
+                //Debug.Log("Repulse: " + col.direction);
+                col.Repulse(GetBounceDirection(col.direction), force * col.inertia);
             }
         }
 

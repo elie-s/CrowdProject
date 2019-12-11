@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  force: 4
+  force: 3
 --- !u!61 &4278362495955286321
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  force: 4
+  force: 3
 --- !u!61 &4887037247589657807
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  force: 4
+  force: 3
 --- !u!61 &4579940402124570290
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  force: 4
+  force: 3
 --- !u!61 &7508743946831917393
 BoxCollider2D:
   m_ObjectHideFlags: 0

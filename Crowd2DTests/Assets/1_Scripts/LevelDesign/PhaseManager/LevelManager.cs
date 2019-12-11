@@ -14,6 +14,7 @@ namespace CrowdProject
         [SerializeField] private GameObject[] borders = default;
         [SerializeField] private int phaseIndex = -1;
         [SerializeField] private float delayBetweenPhases = 1.5f;
+        [SerializeField] private BlobController blob = default;
         [Header("feedback")]
         [SerializeField] private AnimationCurve bloomCurve = default;
         [SerializeField] private float bloomMax = 40.0f;
@@ -21,7 +22,9 @@ namespace CrowdProject
         [SerializeField] private PostProcessProfile postProcess = default;
         [Header("Transition")]
         [SerializeField] private GameObject transition = default;
+        [SerializeField] private Timer timer = default;
         [SerializeField] private float transitionDuration = 5.0f;
+        [SerializeField] private GameObject end = default;
         [Header("Audio Sources")]
         [SerializeField] private AudioSource getBweep = default;
         [SerializeField] private RandomSource endPart = default;
@@ -33,7 +36,7 @@ namespace CrowdProject
             phaseData.collectableGot.Register(BweepFeedback);
             phaseData.nextPart.Register(endPart.Play);
             phaseData.endPhase.Register(NextPhase);
-            phaseData.endPhase.Register(camScaler.Scale);
+            //phaseData.endPhase.Register(camScaler.Scale);
             phaseIndex = -1;
 
         }
@@ -52,13 +55,40 @@ namespace CrowdProject
         private IEnumerator NextPhaseRoutine()
         {
             phaseIndex++;
-            yield return new WaitForSeconds(delayBetweenPhases);
+
+            if (phaseIndex == 0)
+            {
+                yield return new WaitForSeconds(delayBetweenPhases);
+            }
+            else
+            {
+                timer?.Stop();
+
+                
+
+                yield return new WaitForSeconds(1.0f);
+                blob.enabled = false;
+                transition.SetActive(true);
+                yield return new WaitForSeconds(delayBetweenPhases/2);
+                camScaler.Scale();
+                yield return new WaitForSeconds(delayBetweenPhases / 2);
+                transition.SetActive(false);
+                blob.enabled = true;
+                yield return new WaitForSeconds(1.0f);
+
+                
+            }
 
             if (phaseIndex == phases.Length)
             {
-
+                blob.enabled = false;
+                end.SetActive(true);
             }
-            else LoadPhase();
+            else
+            {
+                timer?.Play();
+                LoadPhase();
+            }
         }
 
         private IEnumerator BloomBweepRoutine()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CrowdProject
 {
-    public class GoldenSnitchBehaviour : MonoBehaviour
+    public class GoldenSnitchBehaviour : MovementBehaviour
     {
         [SerializeField] private Rect area = default;
         [SerializeField] private Transform player = default;

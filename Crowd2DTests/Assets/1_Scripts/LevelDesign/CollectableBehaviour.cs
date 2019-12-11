@@ -70,6 +70,7 @@ namespace CrowdProject
 
             transform.position = goal;
             phaseData?.RemoveCollectable();
+            Destroy(gameObject);
             
         }
 
