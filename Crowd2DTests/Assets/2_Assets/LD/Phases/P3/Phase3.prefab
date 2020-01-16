@@ -47,8 +47,6 @@ MonoBehaviour:
   - {fileID: 127229650313252227, guid: a1e6f0502f9b8384c81100fb8eedbbbc, type: 3}
   - {fileID: 127229650313252227, guid: cb7a4c4228535d241a30f3fb13ae70c8, type: 3}
   - {fileID: 127229650313252227, guid: e658f214ffdb5d449901867e4317ecca, type: 3}
-  - {fileID: 127229650313252227, guid: 87fa9785e611c0e439654aa287d98187, type: 3}
-  - {fileID: 127229650313252227, guid: bfe2f5abeb3617b47bf049f7e6411d64, type: 3}
   partIndex: -1
   phaseData: {fileID: 11400000, guid: 9a5c0f34ddee7944b94d13d4b3a38eb9, type: 2}
   delayBetweenParts: 1.5
