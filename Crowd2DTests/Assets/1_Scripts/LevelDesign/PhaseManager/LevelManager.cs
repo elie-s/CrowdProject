@@ -67,11 +67,13 @@ namespace CrowdProject
             {
                 if (phaseIndex == 1)
                 {
+                    transitionAudio.Play();
                     phaseAudios[1].mute = false;
                     phaseAudios[0].mute = true;
                 }
                 else if (phaseIndex == 2)
                 {
+                    transitionAudio.Play();
                     phaseAudios[2].mute = false;
                     phaseAudios[1].mute = true;
                 }
