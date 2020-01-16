@@ -12,15 +12,12 @@ namespace CrowdProject
         [HideInInspector] public Sprite sprite = default;
         [HideInInspector] public Vector3 direction = default;
         [SerializeField] private RawImage render = default;
-        [SerializeField, Range(-.5f, .5f)] private float ceil = 0.35f;
-        [SerializeField] private int size = 32;
         [SerializeField] private float displayMultiplier = 8.0f;
-        [SerializeField] private Rect rect;
         [SerializeField] private Transform displayCenter = default;
         [SerializeField] private Transform mesh = default;
         [SerializeField] private float centerDistance = 1.0f;
-        [SerializeField, Range(1,60)] private int perSecondUpdate = 25;
         [SerializeField] private bool rotate = false;
+        public WebcamManagerData settings = default;
         [Header("Tests")]
         [SerializeField] private bool test = true;
         [SerializeField] private bool resize = false;
@@ -33,19 +30,18 @@ namespace CrowdProject
         [Header("Debug Controller")]
         [SerializeField] private bool debugControllerEnabled = false;
         [SerializeField] private float debugControllerSpeed = 5.0f;
-        //[Header("Compute Shader")]
-        //[SerializeField] private ComputeShader webcamProcessing = default;
-        //[SerializeField] private Vector3Int threadGroups = new Vector3Int(8, 8, 1);
 
         private WebCamTexture webCam;
         private Color[] oldPixels;
         private IEnumerator spriteRoutine;
         private bool nullDetection = false;
 
+        [HideInInspector] public bool foldout;
+
         private void Awake()
         {
             GetWebcam();
-            texture = new Texture2D((int)rect.width, (int)rect.height);
+            texture = new Texture2D((int)settings.rect.width, (int)settings.rect.height);
             if(render) render.texture = texture;
 
             spriteRoutine = SpriteRoutine();
@@ -74,7 +70,7 @@ namespace CrowdProject
         {
             UpdateSprite();
 
-            yield return new WaitForSeconds(1 / (float)perSecondUpdate);
+            yield return new WaitForSeconds(1 / (float)settings.perSecondUpdate);
             StartCoroutine(SpriteRoutine());
         }
 
@@ -83,38 +79,12 @@ namespace CrowdProject
             mesh.localPosition = -displayCenter.localPosition;
         }
 
-        //private void SetComputeShader()
-        //{
-        //    int kernelIndex = webcamProcessing.FindKernel("CSMain");
-
-        //    render.rectTransform.sizeDelta = new Vector2(size * displayMultiplier, size * displayMultiplier);
-
-        //    Rect tmpRect = new Rect(webCam.width / 2 - rect.width / 2 + rect.x, webCam.height / 2 - rect.height / 2 + rect.y, rect.width, rect.height);
-
-        //    texture = new Texture2D((int)tmpRect.width, (int)tmpRect.height);
-
-        //    texture.SetPixels(webCam.GetPixels((int)tmpRect.x, (int)tmpRect.y, (int)tmpRect.width, (int)tmpRect.height));
-
-        //    RenderTexture tmp = new RenderTexture(texture.width/2, texture.height/2, 0, RenderTextureFormat.ARGB32);
-        //    tmp.
-        //    RenderTexture.active = tmp;
-        //    Graphics.Blit(texture, tmp);
-        //    tmp.enableRandomWrite = true;
-
-
-        //    threadGroups = new Vector3Int(tmp.width / 8, tmp.height / 8, 1);
-
-        //    webcamProcessing.SetTexture(kernelIndex, "Result", tmp);
-        //    webcamProcessing.Dispatch(kernelIndex, threadGroups.x, threadGroups.y, threadGroups.z);
-
-        //}
-
         private void GetWebcam()
         {
             webCam = new WebCamTexture(WebCamTexture.devices[1].name);
             webCam.Play();
 
-            oldPixels = new Color[webCam.width / webCam.height * size * size];
+            oldPixels = new Color[webCam.width / webCam.height * settings.size * settings.size];
         }
 
         private void DebugController()
@@ -122,22 +92,22 @@ namespace CrowdProject
             float x = Input.GetKey(KeyCode.LeftArrow) ? Time.deltaTime * debugControllerSpeed : (Input.GetKey(KeyCode.RightArrow) ? -Time.deltaTime * debugControllerSpeed : 0.0f);
             float y = Input.GetKey(KeyCode.DownArrow) ? Time.deltaTime * debugControllerSpeed : (Input.GetKey(KeyCode.UpArrow) ? -Time.deltaTime * debugControllerSpeed : 0.0f);
 
-            rect.Set(rect.x + x, rect.y + y, rect.width, rect.height);
+            settings.rect.Set(settings.rect.x + x, settings.rect.y + y, settings.rect.width, settings.rect.height);
         }
 
 
         private void UpdateTexture()
         {
 
-            render.rectTransform.sizeDelta = new Vector2(size* displayMultiplier,size* displayMultiplier);
+            render.rectTransform.sizeDelta = new Vector2(settings.size * displayMultiplier, settings.size * displayMultiplier);
 
-            Rect tmpRect = new Rect(webCam.width / 2 - rect.width / 2 + rect.x, webCam.height / 2 - rect.height / 2 + rect.y, rect.width, rect.height);
+            Rect tmpRect = new Rect(webCam.width / 2 - settings.rect.width / 2 + settings.rect.x, webCam.height / 2 - settings.rect.height / 2 + settings.rect.y, settings.rect.width, settings.rect.height);
 
             texture = new Texture2D((int)tmpRect.width, (int)tmpRect.height);
 
             texture.SetPixels(webCam.GetPixels((int)tmpRect.x, (int)tmpRect.y, (int)tmpRect.width, (int)tmpRect.height));
             //texture.SetPixels(webCam.GetPixels());
-            TextureScale.Point(texture, size, size);
+            TextureScale.Point(texture, settings.size, settings.size);
             texture.SetPixels(ConvertContrasts(texture.GetPixels()));
             Vector2 centerPos = Center(ref texture) * centerDistance;
             texture.Apply();
@@ -155,15 +125,15 @@ namespace CrowdProject
         {
             if (!test)
             {
-                if (render) render.rectTransform.sizeDelta = new Vector2(size * displayMultiplier, size * displayMultiplier);
+                if (render) render.rectTransform.sizeDelta = new Vector2(settings.size * displayMultiplier, settings.size * displayMultiplier);
 
-                Rect tmpRect = new Rect(webCam.width / 2 - rect.width / 2 + rect.x, webCam.height / 2 - rect.height / 2 + rect.y, rect.width, rect.height);
+                Rect tmpRect = new Rect(webCam.width / 2 - settings.rect.width / 2 + settings.rect.x, webCam.height / 2 - settings.rect.height / 2 + settings.rect.y, settings.rect.width, settings.rect.height);
 
                 texture = new Texture2D((int)tmpRect.width, (int)tmpRect.height);
 
                 texture.SetPixels(webCam.GetPixels((int)tmpRect.x, (int)tmpRect.y, (int)tmpRect.width, (int)tmpRect.height));
                 //texture.SetPixels(webCam.GetPixels());
-                TextureScale.Point(texture, size, size);
+                TextureScale.Point(texture, settings.size, settings.size);
                 texture.SetPixels(ConvertContrasts(texture.GetPixels()));
                 texture.Apply();
                 if (rotate) SpriteGenerator.Rotate180(ref texture);
@@ -190,7 +160,7 @@ namespace CrowdProject
                 texture.SetPixels(webCam.GetPixels());
                 if (resize)
                 {
-                    int tmpSize = (int)(size * webCam.width / rect.width);
+                    int tmpSize = (int)(settings.size * webCam.width / settings.rect.width);
 
                     TextureScale.Point(texture, tmpSize, tmpSize * webCam.height / webCam.width);
                     texture.filterMode = FilterMode.Point;
@@ -232,7 +202,7 @@ namespace CrowdProject
 
             for (int i = 0; i < result.Length; i++)
             {
-                float value = values[i] > average-ceil ? 0.0f : 1.0f;
+                float value = values[i] > average- settings.ceil ? 0.0f : 1.0f;
 
 
                 if (value == oldPixels[i].r)
@@ -277,6 +247,11 @@ namespace CrowdProject
             result /= amount;
 
             return result;
+        }
+
+        public void ApplyTest()
+        {
+            settings.rect = testRect;
         }
 
     }

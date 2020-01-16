@@ -26,6 +26,8 @@ namespace EANS.Flocks
         private float reachCursorForce = 0.0f;
         private Transform anchor;
 
+        private float anchorDistance => Vector2.Distance(transform.position, anchor.position);
+
         private void OnEnable()
         {
             data = ScriptableObject.CreateInstance<EntityData>();
@@ -37,13 +39,11 @@ namespace EANS.Flocks
             reachCursorForce = Random.Range(0.00f, 0.01f);
         }
 
-        // Start is called before the first frame update
         void Start()
         {
 
         }
 
-        // Update is called once per frame
         void FixedUpdate()
         {
             Move();
@@ -55,21 +55,18 @@ namespace EANS.Flocks
 
         private void LateUpdate()
         {
-            //UpdateData();
+            
         }
 
         private void UpdateData()
         {
             data.direction = (transform.position - data.position).normalized;
             data.position = transform.position;
-            //data.projectedHorizontalPos = transform.position.x > 0 ? transform.position - Vector3.right * settings.area.width : transform.position + Vector3.right * settings.area.width;
-            //data.projectedVerticalPos = transform.position.y > 0 ? transform.position - Vector3.up * settings.area.height : transform.position + Vector3.up * settings.area.height;
-            //data.projectedPos = new Vector3(data.projectedHorizontalPos.x, data.projectedVerticalPos.y);
         }
 
         private void Move()
         {
-            transform.position += transform.right * Speed()/ 60.0f; // * Time.deltaTime;
+            transform.position += transform.right * Speed()/ 60.0f;
 
             if (tpOnLimitsReached) OnLimitsReached();
         }
@@ -87,7 +84,7 @@ namespace EANS.Flocks
             {
                 newDirection = AverageTrajectory() * settings.alignementForce;
                 newDirection += (NeighbourhoodCenter() - transform.position) * settings.cohesionForce;
-                newDirection += AvoidCrash() * settings.separationForce;
+                newDirection += AvoidCrash() * Mathf.Lerp(1.0f, settings.separationForce, Speed() / (settings.speed + settings.maxSpeedModifier));
 
                 transform.right = Vector3.Lerp(transform.right, newDirection.normalized, settings.lerpValue /* * Time.deltaTime * 60.0f*/);
                 if (settings.anchoredToCenter) transform.right = Vector2.Lerp(transform.right, anchor.position - transform.position, settings.ownCursorForce ? reachCursorForce : settings.anchoredForce /* * Time.deltaTime * 60.0f*/);
@@ -96,18 +93,19 @@ namespace EANS.Flocks
                     if (Input.GetKey(KeyCode.Space)) transform.right = Vector2.Lerp(transform.right, cam.ScreenToWorldPoint(Input.mousePosition) - transform.position, settings.ownCursorForce ? reachCursorForce : settings.anchoredForce /* * Time.deltaTime * 60.0f*/);
                 }
 
-                Flee();
+                //Flee();
             }
         }
 
         private float Speed()
         {
-            float speed = (settings.speed + (settings.maxNeighbours - data.neighbours.Count) / 2);
+            float anchorSpeedTime = Mathf.Clamp01((anchorDistance - settings.minAnchorDistance) / (settings.maxAnchorDistance - settings.minAnchorDistance));
 
-            float distance = Vector2.Distance(transform.position, entitiesData.predatorPosition);
-            if (distance > settings.predatorMaxRange) return speed;
+            float speed = (settings.speed + (settings.maxNeighbours - data.neighbours.Count) / 2) + settings.anchorSpeedModifier.Evaluate(anchorSpeedTime)*settings.maxSpeedModifier;
 
-            return speed + speed * settings.fleeingSpeedCurve.Evaluate(1- distance / settings.predatorMaxRange) * 4;
+            return speed;
+
+            //return speed + speed * settings.fleeingSpeedCurve.Evaluate(1- distance / settings.predatorMaxRange) * 4;
         }
 
         private void Flee()

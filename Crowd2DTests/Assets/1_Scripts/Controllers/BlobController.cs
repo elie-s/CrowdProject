@@ -11,6 +11,7 @@ namespace CrowdProject
         [SerializeField] private float speed = 5.0f;
         [SerializeField] private Transform debugDirection = default;
         [SerializeField] private PhaseData phaseData = default;
+        [SerializeField] private bool onTest = default;
         
         [Header("Clamp Area")]
         [SerializeField] private Rect[] areas = default;
@@ -20,7 +21,7 @@ namespace CrowdProject
 
         private void Start()
         {
-            phaseData.endPhase.Register(NextRect);
+            if(!onTest) phaseData.endPhase.Register(NextRect);
         }
 
         // Update is called once per frame
@@ -48,7 +49,7 @@ namespace CrowdProject
             debugDirection.localPosition = webcam.direction/transform.localScale.x;
             debugDirection.eulerAngles = new Vector3(0, 0, Mathf.Atan2(webcam.direction.normalized.y, webcam.direction.normalized.x) * Mathf.Rad2Deg+180);
 
-            
+            //ClampArea();
         }
 
         
@@ -56,8 +57,8 @@ namespace CrowdProject
 
         private void ClampArea()
         {
-            float x = transform.position.x;//Mathf.Clamp(transform.position.x, area.xMax, area.xMin);
-            float y = transform.position.y; // Mathf.Clamp(transform.position.y, area.yMax, area.yMin);
+            float x = Mathf.Clamp(transform.position.x, area.xMax, area.xMin);
+            float y = Mathf.Clamp(transform.position.y, area.yMax, area.yMin);
 
             if (x < area.x) x = area.x;
             else if (x > area.x + area.width) x = area.x + area.width;

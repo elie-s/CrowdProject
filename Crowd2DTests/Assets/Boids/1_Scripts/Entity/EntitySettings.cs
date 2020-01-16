@@ -19,13 +19,18 @@ namespace EANS.Flocks
         public float inRange = 2.5f;
         public int minNeighbours = 2;
         public int maxNeighbours = 7;
-        [Range(0.0f, 20.0f)] public float speed;
         [Range(0.0f, 2 * Mathf.PI)] public float deadSpot;
         public ColorationMode colorationMode = default;
         [Header("Predator")]
         public float predatorMaxRange = 10.0f;
         public AnimationCurve steerForce = default;
         public AnimationCurve fleeingSpeedCurve = default;
+        [Header("Speed Settings")]
+        [Range(0.0f, 20.0f)] public float speed;
+        public AnimationCurve anchorSpeedModifier;
+        [Range(0.0f, 20.0f)] public float maxSpeedModifier;
+        [Range(0.0f, 20.0f)] public float minAnchorDistance;
+        [Range(0.0f, 20.0f)] public float maxAnchorDistance;
 
     }
 }

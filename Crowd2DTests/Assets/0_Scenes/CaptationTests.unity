@@ -342,41 +342,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WebcamManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
-        type: 3}
-      propertyPath: render
-      value: 
-      objectReference: {fileID: 897892243}
-    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
-        type: 3}
-      propertyPath: frame
-      value: 
-      objectReference: {fileID: 1532757547}
-    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
-        type: 3}
-      propertyPath: testRect.width
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
-        type: 3}
-      propertyPath: testRect.height
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
-        type: 3}
-      propertyPath: ceil
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
-        type: 3}
-      propertyPath: size
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
-        type: 3}
-      propertyPath: perSecondUpdate
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 446654971568712118, guid: 0c51e255dcbdd8b4db151ece6670905a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -431,6 +396,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: render
+      value: 
+      objectReference: {fileID: 897892243}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: frame
+      value: 
+      objectReference: {fileID: 1532757547}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: testRect.width
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: testRect.height
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: ceil
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455207889876851451, guid: 0c51e255dcbdd8b4db151ece6670905a,
+        type: 3}
+      propertyPath: perSecondUpdate
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c51e255dcbdd8b4db151ece6670905a, type: 3}

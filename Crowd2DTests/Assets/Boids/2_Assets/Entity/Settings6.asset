@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f96d3262c5fdee49832ba0ab5a9eb19, type: 3}
-  m_Name: Settings1
+  m_Name: Settings6
   m_EditorClassIdentifier: 
-  lerpValue: 0.356
-  separationForce: 2.12
-  alignementForce: 1.8
+  lerpValue: 0.34
+  separationForce: 1
+  alignementForce: 0.95
   cohesionForce: 1
-  anchoredForce: 0.05
+  anchoredForce: 0.00075
   ownCursorForce: 0
   anchoredToCenter: 1
   behaviouralAreaSpan: 1
@@ -29,7 +29,8 @@ MonoBehaviour:
   inRange: 2.5
   minNeighbours: 2
   maxNeighbours: 7
-  deadSpot: 2.84
+  speed: 5
+  deadSpot: 4.8
   colorationMode: 2
   predatorMaxRange: 10
   steerForce:
@@ -80,31 +81,3 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  speed: 8.6
-  anchorSpeedModifier:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 18.874617
-      outSlope: 18.874617
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.03954802
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxSpeedModifier: 12.5
-  minAnchorDistance: 4
-  maxAnchorDistance: 20
