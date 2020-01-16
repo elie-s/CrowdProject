@@ -15,6 +15,8 @@ namespace CrowdProject
         [ContextMenu("Scale")]
         public void Scale()
         {
+            if (index == sets.Length) return;
+
             StartCoroutine(sets[index].Scale(background, cam));
             index++;
         }

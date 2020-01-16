@@ -26,6 +26,10 @@ namespace CrowdProject
         [SerializeField] private float transitionDuration = 5.0f;
         [SerializeField] private GameObject end = default;
         [Header("Audio Sources")]
+        [SerializeField] private AudioSource themeAudio = default;
+        [SerializeField] private AudioSource[] phaseAudios = new AudioSource[3];
+        [SerializeField] private AudioSource transitionAudio = default;
+        [SerializeField] private AudioSource additionalMelody = default;
         [SerializeField] private AudioSource getBweep = default;
         [SerializeField] private RandomSource endPart = default;
 
@@ -38,7 +42,6 @@ namespace CrowdProject
             phaseData.endPhase.Register(NextPhase);
             //phaseData.endPhase.Register(camScaler.Scale);
             phaseIndex = -1;
-
         }
 
         void Start()
@@ -62,9 +65,18 @@ namespace CrowdProject
             }
             else
             {
-                timer?.Stop();
+                if (phaseIndex == 1)
+                {
+                    phaseAudios[1].mute = false;
+                    phaseAudios[0].mute = true;
+                }
+                else if (phaseIndex == 2)
+                {
+                    phaseAudios[2].mute = false;
+                    phaseAudios[1].mute = true;
+                }
 
-                
+                timer?.Stop();                
 
                 yield return new WaitForSeconds(1.0f);
                 blob.enabled = false;
@@ -75,8 +87,6 @@ namespace CrowdProject
                 transition.SetActive(false);
                 blob.enabled = true;
                 yield return new WaitForSeconds(1.0f);
-
-                
             }
 
             if (phaseIndex == phases.Length)
