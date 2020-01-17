@@ -48,7 +48,7 @@ namespace CrowdProject
             debugDirection.localPosition = webcam.direction/transform.localScale.x;
             debugDirection.eulerAngles = new Vector3(0, 0, Mathf.Atan2(webcam.direction.normalized.y, webcam.direction.normalized.x) * Mathf.Rad2Deg+180);
 
-            
+            ClampArea();
         }
 
         
@@ -66,6 +66,16 @@ namespace CrowdProject
             else if (y > area.y + area.height) y = area.y + area.height;
 
             transform.position = new Vector2(x, y);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawLine(new Vector3(area.x, area.y), new Vector3(area.x, area.y + area.height));
+            Gizmos.DrawLine(new Vector3(area.x + area.width, area.y + area.height), new Vector3(area.x, area.y + area.height));
+            Gizmos.DrawLine(new Vector3(area.x + area.width, area.y + area.height), new Vector3(area.x + area.width, area.y));
+            Gizmos.DrawLine(new Vector3(area.x, area.y), new Vector3(area.x + area.width, area.y));
         }
 
         public enum orientation { Rotate0, Rotate90, Rotate180, Rotate270 }

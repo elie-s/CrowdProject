@@ -21,6 +21,7 @@ namespace CrowdProject
         [SerializeField] private float centerDistance = 1.0f;
         [SerializeField, Range(1,60)] private int perSecondUpdate = 25;
         [SerializeField] private bool rotate = false;
+        [SerializeField] private int wcIndex = 1;
         [Header("Tests")]
         [SerializeField] private bool test = true;
         [SerializeField] private bool resize = false;
@@ -111,7 +112,7 @@ namespace CrowdProject
 
         private void GetWebcam()
         {
-            webCam = new WebCamTexture(WebCamTexture.devices[1].name);
+            webCam = new WebCamTexture(WebCamTexture.devices[wcIndex].name);
             webCam.Play();
 
             oldPixels = new Color[webCam.width / webCam.height * size * size];

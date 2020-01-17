@@ -116,6 +116,16 @@ namespace CrowdProject
             }
         }
 
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = new Color(1.0f, 0.8840241f, 0.168f, 1.0f);
+
+            Gizmos.DrawLine(new Vector3(area.x, area.y), new Vector3(area.x, area.y + area.height));
+            Gizmos.DrawLine(new Vector3(area.x + area.width, area.y + area.height), new Vector3(area.x, area.y + area.height));
+            Gizmos.DrawLine(new Vector3(area.x + area.width, area.y + area.height), new Vector3(area.x + area.width, area.y));
+            Gizmos.DrawLine(new Vector3(area.x, area.y), new Vector3(area.x + area.width, area.y));
+        }
+
         private bool CheckBoundaries(Vector2 _pos)
         {
             bool result = _pos.x < area.x || _pos.x > area.x + area.width || _pos.y < area.y || _pos.y > area.y + area.height;

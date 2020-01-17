@@ -7,7 +7,7 @@ namespace CrowdProject
     public class ParallaxCamera : MonoBehaviour
     {
         [SerializeField] private Transform player = default;
-        [SerializeField, Range(0.0f, 0.25f)] private float lerpForce = 0.1f;
+        [SerializeField, Range(0.0f, 0.5f)] private float lerpForce = 0.1f;
 
         void Update()
         {

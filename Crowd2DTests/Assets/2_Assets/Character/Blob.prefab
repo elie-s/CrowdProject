@@ -382,10 +382,10 @@ MonoBehaviour:
   phaseData: {fileID: 11400000, guid: 9a5c0f34ddee7944b94d13d4b3a38eb9, type: 2}
   areas:
   - serializedVersion: 2
-    x: -6
-    y: -3
-    width: 12
-    height: 6
+    x: -8.5
+    y: -4.5
+    width: 17
+    height: 9
   - serializedVersion: 2
     x: -10
     y: -5
